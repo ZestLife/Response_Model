@@ -76,10 +76,41 @@ race_data       <- arrange(race_data, ID)
 race_data       <- select(race_data, -ID)
 
 data <- cbind(data, race_data)
+data <- select(data, -Last.Name)
 
 
 
 
+############ phone number info.
 
 
+# is the work number the same as the home number?
+
+data$Work.Tel <- ifelse(is.na(data$Work.Tel), data$Home.Tel, data$Work.Tel)
+work_home <- ifelse(data$Work.Tel == data$Home.Tel, 1, 0) 
+data$SAMETEL <- work_home 
+
+rm(work_home) 
+
+
+
+######## number of dots at the end of email address
+
+dots <- gsub(".*@", "", data$E.Mail.Address, perl = TRUE)
+dots <- nchar(dots) - nchar(gsub("\\.","", dots))
+
+data$DOTS <- dots
+
+rm(dots)
+
+##########  Clean response
+
+
+data$YES  <- ifelse(data$Response.Group == "Yes", 1, 0)
+data      <- select(data, -Response.Group, -Responses)
+
+
+
+
+rm(race_data, postal_data, postal_code, City_Data, Race_Data)
 
