@@ -5,7 +5,7 @@
 
 
  
-data <- read.csv(paste(Path, "/Data/", "SNS response data.csv", sep = ""))
+data <- read.csv(paste(Path, "/Data/", "SNS response data.csv", sep = ""), na.strings=c(""))
 
 
 
@@ -110,7 +110,8 @@ data$YES  <- ifelse(data$Response.Group == "Yes", 1, 0)
 data      <- select(data, -Response.Group, -Responses)
 
 
-
-
 rm(race_data, postal_data, postal_code, City_Data, Race_Data)
+
+
+######### Replace blanks with NA
 

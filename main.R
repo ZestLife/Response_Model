@@ -12,12 +12,9 @@ source(paste(Path, "/R/Initialize.R", sep = ""))
 source(paste(Path, "/R/Load_Data.R", sep = ""))
 
 
-### Clean Data
-
-
 
 ### Fit model
-
+source(paste(Path, "/R/Regression.R", sep = ""))
 
 
 
