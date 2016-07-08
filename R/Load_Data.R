@@ -61,6 +61,19 @@ data$YY     <- paste("19",yy, sep = "")
 data$MM     <- mm
 
 
+data$AGE    <- as.numeric(as.Date("2014-02-01") - as.Date(paste(paste("19",yy, sep=""), mm , dd, sep = "-")))/365.25
+data$AGECATAGORY <- ifelse(data$AGE < 25, "<25",
+                          ifelse(data$AGE < 30, "30",
+#                          ifelse(data$AGE <35, "35",
+                          ifelse(data$AGE <40, "40",
+#                          ifelse(data$AGE <45, "45",
+                          ifelse(data$AGE <50, "50",
+#                          ifelse(data$AGE <55, "55",
+                          ifelse(data$AGE <60, "60",
+#                          ifelse(data$AGE <65, "65",
+                          ifelse(data$AGE <70, "70", ">70"))))))
+#                                                            ))))
+
 data <- select(data, -ID.Number)
 
 rm(ID, yy, mm, dd, gender)
@@ -114,4 +127,12 @@ rm(race_data, postal_data, postal_code, City_Data, Race_Data)
 
 
 ######### Replace blanks with NA
+for (col in names(data)){
+    data[[col]][data[[col]] == "" | data[[col]] == " "]  <- NA
+}
 
+
+######## Make sure columns are factors
+
+character_vars <- lapply(data, class) == "character"
+data[, character_vars] <- lapply(data[, character_vars], as.factor)
